@@ -6,11 +6,8 @@ namespace Meru\JoinQuitMsg;
 
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
-use pocketmine\Server;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\Player;
-use pocketmine\tile\Chest;
 use pocketmine\utils\Config;
 
 class JoinQuit extends PluginBase implements Listener {
