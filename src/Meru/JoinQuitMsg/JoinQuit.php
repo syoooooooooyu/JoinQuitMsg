@@ -12,28 +12,20 @@ use pocketmine\utils\Config;
 
 class JoinQuit extends PluginBase implements Listener {
 
-    private $config;
-
-    public function onEnable() {
-        parent::onEnable();
+    public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this-> config = new Config($this->getDataFolder() . "QuitMessage.yml", Config::YAML, array(
-            "通常" => "§e&name がログアウトしました。　§7(Reason:正常な切断)", /** client disconnect */
-            "Timeout" => "§e&name がログアウトしました。　§7(Reason:Timeout)", /** timeout */
-            "ServerError" => "§4&name がログアウトしました。　§7(Reason:Internal Server Error)"
-        ));
     }
 
     public function onJoin(PlayerJoinEvent $joinEvent) {
         $player = $joinEvent->getPlayer();
         $playername = $player->getName();
 
-        $joinEvent->setJoinMessage("§e$playername がログインしました。");
+        $joinEvent->setJoinMessage("§e{$playername} がログインしました。");
         $player->sendMessage("§dめる鯖へようこそ！");
         //TODO:正式スタートのときにここの鯖名を変えるのを忘れない
 
         if($player->isOp()) {
-            $joinEvent->setJoinMessage("§eOP:$playername がログインしました。");
+            $joinEvent->setJoinMessage("§eOP:{$playername} がログインしました。");
             $player->sendMessage("☆[notice]OP権限所持者としてログインしました。");
         }
     }
@@ -43,30 +35,12 @@ class JoinQuit extends PluginBase implements Listener {
         $player = $quitEvent->getPlayer();
         $name = $quitEvent->getPlayer()->getName();
 
-        /** ここからPMMP→プラグインの実装 */
-        $quit_normal = $this->config->get("通常");
-        $quit_timeout = $this->config->get("Timeout");
-        $quit_error = $this->config->get("ServerError");
-        /** ここまで */
-
-        /** @var  $quit_normal */
-        $quit_normal = str_replace("&name", $name, $quit_normal);
-        $quit_timeout = str_replace("&name", $name, $quit_timeout);
-        $quit_error = str_replace("&name", $name, $quit_error);
-
         if ($reason === 'client disconnect') {
-            $quitEvent->setQuitMessage($quit_normal);
-            return true;
-
+            $quitEvent->setQuitMessage("ここわかんないから変えといて");
+        }elseif ($reason === 'timeout') {
+            $quitEvent->setQuitMessage("上と同じ");
+        }else{
+            $quitEvent->setQuitMessage("上と同じ");
         }
-        if ($reason === 'timeout') {
-            $quitEvent->setQuitMessage($quit_timeout);
-            return true;
-        }
-        if ($reason === 'Internal server error') {
-            $quitEvent->setQuitMessage($quit_error);
-            return true;
-        }
-        return true;
     }
 }
