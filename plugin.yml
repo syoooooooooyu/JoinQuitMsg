@@ -1,0 +1,8 @@
+name: JoinQuitMsg
+main: Meru\JoinQuitMsg\Main
+version: 1.0.0
+api: [3.0.0 4.0.0]
+author: Meru
+description: 自鯖用#1：入室・退出時のメッセージを制御します。
+website: https://github.com/MeruServer-Pseudonym/JoinQuitMsg
+load: POSTWORLD
